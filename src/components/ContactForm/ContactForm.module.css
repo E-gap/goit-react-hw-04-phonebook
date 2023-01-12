@@ -1,0 +1,28 @@
+.contactForm {
+  border: 2px solid grey;
+  width: 500px;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.block {
+  display: block;
+}
+
+.block label {
+  font-size: 30px;
+}
+
+.block input {
+  border: 2px solid grey;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.block button {
+  background-color: aqua;
+  font-size: 20px;
+  border-radius: 20px;
+  padding: 5px;
+}
