@@ -1,8 +1,7 @@
-import React from 'react';
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
 
-const Filter = ({ filter, onChange }) => {
+export default function Filter({ filter, onChange }) {
   return (
     <div className={css.filter}>
       <label className={css.block}>
@@ -17,11 +16,9 @@ const Filter = ({ filter, onChange }) => {
       </label>
     </div>
   );
-};
+}
 
 Filter.propTypes = {
   filter: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
-
-export default Filter;

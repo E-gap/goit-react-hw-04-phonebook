@@ -1,9 +1,8 @@
-import React from 'react';
 import ContactListItem from '../ContactListItem/ContactListItem.jsx';
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
 
-const ContactList = ({ filteredContacts, deleteContact }) => {
+export default function ContactList({ filteredContacts, deleteContact }) {
   return filteredContacts.length > 0 ? (
     <ul className={css.contactList}>
       {filteredContacts.map(({ id, name, number }) => (
@@ -19,7 +18,7 @@ const ContactList = ({ filteredContacts, deleteContact }) => {
   ) : (
     <p className={css.warning}>There are not such contacts in this phonebook</p>
   );
-};
+}
 
 ContactList.propTypes = {
   filteredContacts: PropTypes.arrayOf(
@@ -31,5 +30,3 @@ ContactList.propTypes = {
   ).isRequired,
   deleteContact: PropTypes.func.isRequired,
 };
-
-export default ContactList;

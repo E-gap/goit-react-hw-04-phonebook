@@ -1,8 +1,7 @@
-import React from 'react';
 import css from './ContactListItem.module.css';
 import PropTypes from 'prop-types';
 
-const ContactListItem = ({ id, name, number, deleteContact }) => {
+export default function ContactListItem({ id, name, number, deleteContact }) {
   return (
     <li className={css.listItem}>
       {name}: {number}
@@ -16,7 +15,7 @@ const ContactListItem = ({ id, name, number, deleteContact }) => {
       </button>
     </li>
   );
-};
+}
 
 ContactListItem.propTypes = {
   id: PropTypes.string.isRequired,
@@ -24,5 +23,3 @@ ContactListItem.propTypes = {
   number: PropTypes.string.isRequired,
   deleteContact: PropTypes.func.isRequired,
 };
-
-export default ContactListItem;
