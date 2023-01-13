@@ -1,98 +1,79 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ContactForm from './ContactForm/ContactForm.jsx';
 import ContactList from './ContactList/ContactList.jsx';
 import Filter from './Filter/Filter.jsx';
 
-export class App extends React.Component {
-  state = {
-    contacts: [],
-    filter: '',
+export const App = () => {
+  const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem('contacts')) ?? ''
+  );
+  const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    console.log('добавился контакт');
+    console.log(contacts);
+
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
+  const handlerChangeFilter = event => {
+    setFilter(event.target.value);
   };
 
-  componentDidMount() {
-    const list = localStorage.getItem('contacts');
-    const parseList = JSON.parse(list);
-
-    if (parseList) {
-      this.setState({ contacts: parseList });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
-
-  handlerChangeFilter = event => {
-    this.setState({
-      filter: event.target.value,
-    });
-  };
-
-  filterContacts = () => {
-    return this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+  const filterContacts = () => {
+    const filteredContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
+
+    return filteredContacts;
   };
 
-  deleteContact = id => {
-    this.setState(prevState => {
-      return {
-        contacts: prevState.contacts.filter(contact => contact.id !== id),
-      };
-    });
+  const deleteContact = id => {
+    setContacts(prevState => prevState.filter(contact => contact.id !== id));
   };
 
-  formHandlerSubmit = data => {
-    const array = this.state.contacts.filter(
+  const formHandlerSubmit = data => {
+    const array = contacts.filter(
       contact => contact.name.toLowerCase() === data.name.toLowerCase()
     );
     if (array.length > 0) {
       alert(`${data.name} is already in contacts`);
     } else {
-      this.setState(prevState => {
-        return { contacts: [data, ...prevState.contacts] };
-      });
+      setContacts(prevState => [data, ...prevState]);
     }
   };
 
-  render() {
-    return (
-      <div
-        style={{
-          height: '100vh',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-          paddingLeft: '50px',
-        }}
-      >
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.formHandlerSubmit} />
+  return (
+    <div
+      style={{
+        height: '100vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 40,
+        color: '#010101',
+        paddingLeft: '50px',
+      }}
+    >
+      <h1>Phonebook</h1>
+      <ContactForm onSubmit={formHandlerSubmit} />
 
-        <h2>Contacts</h2>
-        <Filter
-          filter={this.state.filter}
-          onChange={this.handlerChangeFilter}
+      <h2>Contacts</h2>
+      <Filter filter={filter} onChange={handlerChangeFilter} />
+      {contacts.length > 0 ? (
+        <ContactList
+          filteredContacts={filterContacts()}
+          deleteContact={deleteContact}
         />
-        {this.state.contacts.length > 0 ? (
-          <ContactList
-            filteredContacts={this.filterContacts()}
-            deleteContact={this.deleteContact}
-          />
-        ) : (
-          <p
-            style={{
-              color: 'green',
-              fontSize: '40px',
-            }}
-          >
-            This phonebook is empty
-          </p>
-        )}
-      </div>
-    );
-  }
-}
+      ) : (
+        <p
+          style={{
+            color: 'green',
+            fontSize: '40px',
+          }}
+        >
+          This phonebook is empty
+        </p>
+      )}
+    </div>
+  );
+};
