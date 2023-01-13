@@ -1,7 +1,7 @@
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
 
-export default function Filter({ filter, onChange }) {
+const Filter = ({ filter, onChange }) => {
   return (
     <div className={css.filter}>
       <label className={css.block}>
@@ -16,9 +16,11 @@ export default function Filter({ filter, onChange }) {
       </label>
     </div>
   );
-}
+};
 
 Filter.propTypes = {
   filter: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
+
+export default Filter;

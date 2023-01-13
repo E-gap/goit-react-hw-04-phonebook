@@ -1,10 +1,21 @@
 import css from './ContactListItem.module.css';
 import PropTypes from 'prop-types';
+import { BsFillCircleFill } from 'react-icons/bs';
 
-export default function ContactListItem({ id, name, number, deleteContact }) {
+const ContactListItem = ({ id, name, number, deleteContact }) => {
   return (
     <li className={css.listItem}>
-      {name}: {number}
+      <div>
+        <span className={css.icon}>
+          <BsFillCircleFill
+            style={{
+              height: '20px',
+              width: '20px',
+            }}
+          />
+        </span>
+        {name}: {number}
+      </div>
       <button
         type="button"
         onClick={() => {
@@ -15,7 +26,7 @@ export default function ContactListItem({ id, name, number, deleteContact }) {
       </button>
     </li>
   );
-}
+};
 
 ContactListItem.propTypes = {
   id: PropTypes.string.isRequired,
@@ -23,3 +34,5 @@ ContactListItem.propTypes = {
   number: PropTypes.string.isRequired,
   deleteContact: PropTypes.func.isRequired,
 };
+
+export default ContactListItem;
