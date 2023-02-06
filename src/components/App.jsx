@@ -30,10 +30,11 @@ export const App = () => {
   };
 
   const formHandlerSubmit = data => {
-    const array = contacts.filter(
+    const isAlreadyContact = contacts.find(
       contact => contact.name.toLowerCase() === data.name.toLowerCase()
     );
-    if (array.length > 0) {
+
+    if (isAlreadyContact) {
       alert(`${data.name} is already in contacts`);
     } else {
       setContacts(prevState => [data, ...prevState]);
